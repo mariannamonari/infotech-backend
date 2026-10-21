@@ -1,5 +1,5 @@
 import { scryptSync, timingSafeEqual } from "crypto";
-import pool from "./DatabaseModel";
+import { pool } from "./DatabaseModel";
 
 class Usuario {
     static async buscarPorEmail(email: string) {

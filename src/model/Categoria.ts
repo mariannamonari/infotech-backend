@@ -1,4 +1,4 @@
-import pool from "./DatabaseModel";
+import { pool } from "./DatabaseModel";
 
 class Categoria {
     static async listarCategorias() {

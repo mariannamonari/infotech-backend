@@ -1,8 +1,7 @@
 import 'dotenv/config';
-import { DatabaseModel } from "./model/DatabaseModel.js";
-import { server } from "./server.js";
+import { DatabaseModel } from "./model/DatabaseModel";
+import { server } from "./server";
 
-// Pega porta com segurança: Render -> SERVER_PORT -> 3000
 function getPort(): number {
     const candidates = [process.env.PORT, process.env.SERVER_PORT, '3000'];
     for (const raw of candidates) {

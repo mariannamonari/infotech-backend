@@ -63,3 +63,6 @@ export class DatabaseModel {
   }
 }
 
+export const pool = new DatabaseModel().pool;
+export default pool;
+
