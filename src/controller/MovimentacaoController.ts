@@ -3,6 +3,36 @@ import MovimentacaoDTO from "../dto/MovimentacaoDTO";
 import Movimentacao from "../model/Movimentacao";
 
 class MovimentacaoController {
+    static listarTipos(req: Request, res: Response) {
+        return res.status(200).json([
+            "ENTRADA",
+            "SAIDA"
+        ]);
+    }
+
+    static listarMotivos(req: Request, res: Response) {
+        return res.status(200).json([
+            "COMPRA",
+            "VENDA",
+            "DEVOLUCAO",
+            "AJUSTE",
+            "PERDA",
+            "TRANSFERENCIA"
+        ]);
+    }
+
+    private static converterNumero(valor: number | string | null | undefined) {
+        if (valor === undefined || valor === null || valor === "") {
+            return null;
+        }
+
+        const numero = typeof valor === "string"
+            ? Number(valor.replace(",", "."))
+            : Number(valor);
+
+        return Number.isFinite(numero) ? numero : null;
+    }
+
     static async listarMovimentacoes(req: Request, res: Response) {
         try {
             const movimentacoes = await Movimentacao.listarMovimentacoes();
@@ -88,6 +118,21 @@ class MovimentacaoController {
                 });
             }
 
+            const precoUnitarioPraticado = MovimentacaoController.converterNumero(preco_unitario_praticado);
+            const valorTotal = MovimentacaoController.converterNumero(valor_total);
+
+            if (preco_unitario_praticado !== undefined && preco_unitario_praticado !== null && precoUnitarioPraticado === null) {
+                return res.status(400).json({
+                    mensagem: "O preço unitário praticado é inválido"
+                });
+            }
+
+            if (valor_total !== undefined && valor_total !== null && valorTotal === null) {
+                return res.status(400).json({
+                    mensagem: "O valor total é inválido"
+                });
+            }
+
             const movimentacao = await Movimentacao.cadastrarMovimentacao(
                 Number(id_produto),
                 id_movimentacao_origem === undefined || id_movimentacao_origem === null
@@ -96,12 +141,8 @@ class MovimentacaoController {
                 tipo.trim(),
                 motivo.trim(),
                 Number(quantidade),
-                preco_unitario_praticado === undefined || preco_unitario_praticado === null
-                    ? null
-                    : Number(preco_unitario_praticado),
-                valor_total === undefined || valor_total === null
-                    ? null
-                    : Number(valor_total),
+                precoUnitarioPraticado,
+                valorTotal,
                 observacao.trim()
             );
 

@@ -1,4 +1,4 @@
-import pool from "../database";
+import pool from "./DatabaseModel";
 
 class Produto {
     static async listarProdutos() {

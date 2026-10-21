@@ -1,20 +1,27 @@
 import { Router } from "express";
 import CategoriaController from "./controller/CategoriaController";
+import LoginController from "./controller/LoginController";
+import auth from "./middleware/auth";
 import MovimentacaoController from "./controller/MovimentacaoController";
 import ProdutoController from "./controller/ProdutoController";
 
 const router = Router();
 
+router.get("/", (_req, res) => {
+    res.json({ mensagem: "API InfoTech online" });
+});
+
+router.post(
+    "/login",
+    LoginController.login
+);
+
+router.use(auth);
+
 // Listar todos os produtos
 router.get(
     "/produtos",
     ProdutoController.listarProdutos
-);
-
-// Buscar um produto pelo ID
-router.get(
-    "/produtos/:id",
-    ProdutoController.buscarProduto
 );
 
 // Cadastrar um novo produto
@@ -27,6 +34,12 @@ router.post(
 router.get(
     "/produtos/reposicao",
     ProdutoController.listarProdutosReposicao
+);
+
+// Buscar um produto pelo ID
+router.get(
+    "/produtos/:id",
+    ProdutoController.buscarProduto
 );
 
 // Listar todas as categorias
@@ -51,6 +64,18 @@ router.post(
 router.get(
     "/movimentacoes",
     MovimentacaoController.listarMovimentacoes
+);
+
+// Listar tipos de movimentação
+router.get(
+    "/movimentacoes/tipos",
+    MovimentacaoController.listarTipos
+);
+
+// Listar motivos de movimentação
+router.get(
+    "/movimentacoes/motivos",
+    MovimentacaoController.listarMotivos
 );
 
 // Buscar uma movimentação pelo ID

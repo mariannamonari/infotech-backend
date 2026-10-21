@@ -1,11 +1,11 @@
 interface MovimentacaoDTO {
-    id_produto: number;
-    id_movimentacao_origem?: number | null;
+    id_produto: number | string;
+    id_movimentacao_origem?: number | string | null;
     tipo: string;
     motivo: string;
-    quantidade: number;
-    preco_unitario_praticado?: number | null;
-    valor_total?: number | null;
+    quantidade: number | string;
+    preco_unitario_praticado?: number | string | null;
+    valor_total?: number | string | null;
     observacao: string;
 }
 
