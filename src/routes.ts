@@ -2,12 +2,18 @@ import { Router } from "express";
 import CategoriaController from "./controller/CategoriaController";
 import MovimentacaoController from "./controller/MovimentacaoController";
 import ProdutoController from "./controller/ProdutoController";
+import RelatorioController from "./controller/RelatorioController";
 
 const router = Router();
 
 router.get("/", (_req, res) => {
     res.json({ mensagem: "API InfoTech online" });
 });
+
+router.get(
+    "/relatorios/estoque",
+    RelatorioController.obterEstoque
+);
 
 // Listar todos os produtos
 router.get(
