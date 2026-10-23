@@ -1,7 +1,5 @@
 import { Router } from "express";
 import CategoriaController from "./controller/CategoriaController";
-import LoginController from "./controller/LoginController";
-import auth from "./middleware/auth";
 import MovimentacaoController from "./controller/MovimentacaoController";
 import ProdutoController from "./controller/ProdutoController";
 
@@ -10,13 +8,6 @@ const router = Router();
 router.get("/", (_req, res) => {
     res.json({ mensagem: "API InfoTech online" });
 });
-
-router.post(
-    "/login",
-    LoginController.login
-);
-
-router.use(auth);
 
 // Listar todos os produtos
 router.get(
